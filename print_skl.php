@@ -4,22 +4,25 @@ require "config/function.php";
 require "config/functions.crud.php";
 include "assets/back/vendors/phpqrcode/qrlib.php";
 session_start();
-if (!isset($_SESSION['id_siswaskl'])) {
-    die('Anda tidak diijinkan mengakses langsung');
-}
+// if (!isset($_SESSION['id_siswaskl'])) {
+//     die('Anda tidak diijinkan mengakses langsung');
+// }
 $siswa = fetch($koneksi, 'siswa', ['id' => dekripsi($_GET['id'])]);
 $skl = fetch($koneksi, 'skl', ['id_skl' => 1]);
 $tempdir = "temp/"; //Nama folder tempat menyimpan file qrcode
 if (!file_exists($tempdir)) //Buat folder bername temp
     mkdir($tempdir);
 
+    $actual_link = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] === 'on' ? "https" : "http") . "://$_SERVER[HTTP_HOST]$_SERVER[REQUEST_URI]";
+    $actual_link = str_replace("/admin/mod_siswa/","/",$actual_link);
+
 //isi qrcode jika di scan
-$codeContents = $siswa['nis'] . '-' . $siswa['nama'];
+    $codeContents = $actual_link;
 
 //simpan file kedalam temp
 //nilai konfigurasi Frame di bawah 4 tidak direkomendasikan
 
-QRcode::png($codeContents, $tempdir . $siswa['nis'] . '.png', QR_ECLEVEL_M, 4);
+QRcode::png($codeContents, $tempdir . $siswa['nisn'] . '.png', QR_ECLEVEL_M, 4);
 
 ?>
 <!DOCTYPE html>
@@ -28,7 +31,7 @@ QRcode::png($codeContents, $tempdir . $siswa['nis'] . '.png', QR_ECLEVEL_M, 4);
 <head>
     <meta charset='utf-8'>
 
-    <title>ZONASI_<?= $siswa['nama'] ?></title>
+    <title><?= $siswa['nama'] ?></title>
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="assets/back/vendors/bootstrap/dist/css/bootstrap.min.css">
@@ -43,15 +46,14 @@ QRcode::png($codeContents, $tempdir . $siswa['nis'] . '.png', QR_ECLEVEL_M, 4);
     <?php } else { ?>
         <img src="<?= $skl['header'] ?>" width="100%">
     <?php } ?>
-    <hr>
     <center>
-        <h4><u><?= $skl['nama_surat'] ?></u></h4>
+        <h4 class="mt-3"><u><?= $skl['nama_surat'] ?></u></h4>
         No. Surat : <?= sprintf("%03d", $siswa['id']); ?><?= $skl['no_surat'] ?><?= date('Y') ?>
     </center>
     <br><br>
     <div class="col-md-12">
         <?= $skl['pembuka'] ?>
-        <table style="margin-left: 80px;margin-right:80px" class="table table-sm table-bordered">
+        <table style="margin-left: 80px;margin-right:80px" class="table table-sm border-0">
             <tr>
                 <td>Nama</td>
                 <td><?= $siswa['nama'] ?></td>
@@ -64,12 +66,12 @@ QRcode::png($codeContents, $tempdir . $siswa['nis'] . '.png', QR_ECLEVEL_M, 4);
                 <td>NISN / No Pendaftaran</td>
                 <td><?= $siswa['nisn'] ?> / <?= $siswa['nis'] ?></td>
             </tr>
-            <?php if ($siswa['jurusan'] <> null) { ?>
+            <!-- <?php if ($siswa['jurusan'] <> null) { ?>
                 <tr>
                     <td>Jurusan</td>
                     <td><?= $siswa['jurusan'] ?></td>
                 </tr>
-            <?php } ?>
+            <?php } ?> -->
         </table>
         <p><?= $skl['isi_surat'] ?> </p>
         <br>
@@ -88,13 +90,13 @@ QRcode::png($codeContents, $tempdir . $siswa['nis'] . '.png', QR_ECLEVEL_M, 4);
         <table width="100%">
             <tr>
                 <td style="text-align: center">
-                    <img class="img" src="temp/<?= $siswa['nis'] ?>.png">
+                    <img class="img" src="temp/<?= $siswa['nisn'] ?>.png">
                 </td>
                 <td></td>
                 <td style="text-align: center">
                     <?= $setting['kota'] ?>, <?= $skl['tgl_surat'] ?>
-                    <p><?= $setting['nama_sekolah'] ?></p>
-                    <br><br><br>
+                    <p>PPDB <?= $setting['nama_sekolah'] ?></p>
+                    <br><br><br><br><br>
                     <?= $setting['nama_kepsek'] ?>
                     <p><?= $setting['nip_kepsek'] ?></p>
                     <?php if ($skl['sttd'] == 1) { ?>
@@ -106,6 +108,34 @@ QRcode::png($codeContents, $tempdir . $siswa['nis'] . '.png', QR_ECLEVEL_M, 4);
                 </td>
             </tr>
         </table>
+        <?php if ($skl['header'] == '') { ?>
+            <h3><?= $setting['nama_sekolah'] ?></h3>
+            <p><small> <?= $setting['alamat'] ?></small></p>
+        <?php } else { ?>
+            <img src="<?= $skl['header'] ?>" width="100%">
+        <?php } ?>
+        <div class="container-fluid">
+            <h4 class="text-center my-3">INFORMASI DAFTAR ULANG</h4>
+            <p>Bagi yang <strong>DITERIMA JALUR AFIRMASI</strong> agar melakukan Daftar Ulang pada tanggal 3 - 7 Juli 2023 dengan menyerahkan dokumen:</p>
+            <ol>
+                <li>Surat Keterangan Lulus (SKL) Asli;</li>
+                <li>Tanda Bukti Pengajuan Pendaftaran (Lembar 1 dan Lembar 2)</li>
+                <li>Print out Bukti Tanda Lulus Seleksi Jalur Afirmasi dari website PPDB SMAN 9 Tangerang;</li>
+                <li>Fotocopy Kartu Keluarga;</li>
+                <li>Fotocopy Akte Kelahiran;</li>
+                <li>Fotocopy KKS/KIP/PKH/KIS;</li>
+                <li>Pas photo ukuran 3 x 4 sebanyak 1 lembar.</li>
+                <li>Nomor 1 s.d 6 dimasukan ke dalam Map <strong>BIRU</strong> untuk <strong>LAKI-LAKI</strong>, Map <strong>MERAH</strong> untuk <strong>PEREMPUAN</strong>.</li>
+            </ol>
+            <p class="mt-5 text-right">
+                Terima kasih.
+            </p>
+            <p class="mt-5 text-right">
+                PANITIA PPDB <br/>
+                SMAN 9 TANGERANG
+            </p>
+
+        </div>
     </div>
 </body>
 

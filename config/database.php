@@ -1,9 +1,9 @@
 <?php
 // deklarasi parameter koneksi database
 $server   = "localhost";
-$username = "u1084348_ppdbs2";
-$password = "Cyber333";
-$database = "u1084348_ppdbs2";
+$username = "root";
+$password = "";
+$database = "sekolah_skl";
 
 // koneksi database
 $koneksi = mysqli_connect($server, $username, $password, $database);
