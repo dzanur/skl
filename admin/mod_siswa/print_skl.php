@@ -109,33 +109,44 @@ QRcode::png($codeContents, $tempdir . $siswa['nis'] . '.png', QR_ECLEVEL_M, 4);
                 </td>
             </tr>
         </table>
-        <?php if ($skl['header'] == '') { ?>
-            <h3><?= $setting['nama_sekolah'] ?></h3>
-            <p><small> <?= $setting['alamat'] ?></small></p>
-        <?php } else { ?>
-            <img src="../../<?= $skl['header'] ?>" width="100%">
-        <?php } ?>
-        <div class="container-fluid">
-            <h4 class="text-center my-3">INFORMASI DAFTAR ULANG</h4>
-            <p>Bagi yang <strong>DITERIMA JALUR AFIRMASI</strong> agar melakukan Daftar Ulang pada tanggal 3 - 7 Juli 2023 dengan menyerahkan dokumen:</p>
-            <ol>
-                <li>Surat Keterangan Lulus (SKL) Asli;</li>
-                <li>Tanda Bukti Pengajuan Pendaftaran (Lembar 1 dan Lembar 2)</li>
-                <li>Print out Bukti Tanda Lulus Seleksi Jalur Afirmasi dari website PPDB SMAN 9 Tangerang;</li>
-                <li>Fotocopy Kartu Keluarga;</li>
-                <li>Fotocopy Akte Kelahiran;</li>
-                <li>Fotocopy KKS/KIP/PKH/KIS;</li>
-                <li>Pas photo ukuran 3 x 4 sebanyak 1 lembar.</li>
-                <li>Nomor 1 s.d 6 dimasukan ke dalam Map <strong>BIRU</strong> untuk <strong>LAKI-LAKI</strong>, Map <strong>MERAH</strong> untuk <strong>PEREMPUAN</strong>.</li>
-            </ol>
-            <p class="mt-5 text-right">
-                Terima kasih.
-            </p>
-            <p class="mt-5 text-right">
-                PANITIA PPDB <br/>
-                SMAN 9 TANGERANG
-            </p>
-
+        <?php if ($siswa['keterangan'] == 1) { ?>
+            <?php if ($skl['header'] == '') { ?>
+                <h3><?= $setting['nama_sekolah'] ?></h3>
+                <p><small> <?= $setting['alamat'] ?></small></p>
+            <?php } else { ?>
+                <img src="../../<?= $skl['header'] ?>" width="100%">
+            <?php } ?>
+            <div class="container-fluid">
+                <h4 class="text-center my-3">INFORMASI DAFTAR ULANG</h4>
+                <p>Bagi yang <strong>DITERIMA JALUR AFIRMASI</strong> agar melakukan Daftar Ulang pada tanggal 3 - 7 Juli 2023 dengan menyerahkan dokumen:</p>
+                <ol>
+                    <li>Surat Keterangan Lulus (SKL) Asli;</li>
+                    <li>Tanda Bukti Pengajuan Pendaftaran (Lembar 1 dan Lembar 2)</li>
+                    <li>Print out Bukti Tanda Lulus Seleksi Jalur Afirmasi dari website PPDB SMAN 9 Tangerang;</li>
+                    <li>Fotocopy Kartu Keluarga;</li>
+                    <li>Fotocopy Akte Kelahiran;</li>
+                    <li>Fotocopy KKS/KIP/PKH/KIS;</li>
+                    <li>Pas photo ukuran 3 x 4 sebanyak 1 lembar.</li>
+                    <li>Nomor 1 s.d 6 dimasukan ke dalam Map <strong>BIRU</strong> untuk <strong>LAKI-LAKI</strong>, Map <strong>MERAH</strong> untuk <strong>PEREMPUAN</strong>.</li>
+                </ol>
+                <p>
+                    Terima kasih.
+                </p>
+                <table width="100%" class="border-0 mt-5">
+                    <tr>
+                        <td style="text-align: center; border-style: solid;" width="130">
+                            <strong>Isian Online</strong><hr>
+                            <img src="../../temp/isianonline.jpg" width="150" alt="Isian Online 2023"><br/>
+                            <span class="text-center">SCAN Me</span>
+                        </td>
+                        <td></td>
+                        <td width="100%" style="text-align: center;">
+                            PANITIA PPDB <br/>
+                            SMAN 9 TANGERANG
+                        </td>
+                    </tr>
+                </table>
+            <?php } ?>
         </div>
     </div>
 </body>
@@ -152,6 +163,6 @@ $dompdf = new Dompdf();
 $dompdf->loadHtml($html);
 $dompdf->setPaper('A4', 'portrait');
 $dompdf->render();
-$dompdf->stream("KHS-PPDB-S9-" . $siswa['nama'] . ".pdf", array("Attachment" => false));
+$dompdf->stream($siswa['nama'] . ".pdf", array("Attachment" => false));
 exit(0);
 ?>
