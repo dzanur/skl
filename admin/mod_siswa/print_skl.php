@@ -139,8 +139,9 @@ QRcode::png($codeContents, $tempdir . $siswa['nis'] . '.png', QR_ECLEVEL_M, 4);
                             <img src="../../temp/isianonline.jpg" width="150" alt="Isian Online 2023"><br/>
                             <span class="text-center">SCAN Me</span>
                         </td>
-                        <td></td>
-                        <td width="100%" style="text-align: center;">
+                        <td width="15"></td>
+                        <td width="100"><a href="https://dr.sman9tangerang.sch.id/isian-online-2023" class="btn btn-primary" target="_BLANK">Buka</a></td>
+                        <td width="300" style="text-align: center;">
                             PANITIA PPDB <br/>
                             SMAN 9 TANGERANG
                         </td>
