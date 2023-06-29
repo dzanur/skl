@@ -20,7 +20,7 @@ if ($pg == 'login') {
 
             if ($password <> $siswa['password']) {
                 $data = [
-                    'pesan' => 'Password Salah !'
+                    'pesan' => 'Maaf anda tidak diterima !'
                 ];
                 echo json_encode($data);
             } else {
