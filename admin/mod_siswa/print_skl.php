@@ -69,8 +69,8 @@ QRcode::png($codeContents, $tempdir . $siswa['nis'] . '.png', QR_ECLEVEL_M, 4);
             </tr>
             <?php if ($siswa['jurusan'] <> null) { ?>
                 <tr>
-                    <td>Jurusan</td>
-                    <td><?= $siswa['jurusan'] ?></td>
+                    <td>Jalur</td>
+                    <td><?php echo ucwords(strtolower($siswa['jurusan'])); ?></td>
                 </tr>
             <?php } ?>
         </table>
@@ -87,11 +87,11 @@ QRcode::png($codeContents, $tempdir . $siswa['nis'] . '.png', QR_ECLEVEL_M, 4);
         </center>
         <br>
         <?= $skl['penutup'] ?>
-        <br><br>
-        <table width="100%" class="border-0">
+        <br>
+        <table width="100%">
             <tr>
                 <td style="text-align: center">
-                    <img class="img" src="../../temp/<?= $siswa['nis'] ?>.png">
+                    <img class="img" src="../../temp/<?= $siswa['nisn'] ?>.png">
                 </td>
                 <td></td>
                 <td style="text-align: center">
@@ -118,14 +118,25 @@ QRcode::png($codeContents, $tempdir . $siswa['nis'] . '.png', QR_ECLEVEL_M, 4);
             <?php } ?>
             <div class="container-fluid">
                 <h4 class="text-center my-3">INFORMASI DAFTAR ULANG</h4>
-                <p>Bagi yang <strong>DITERIMA JALUR AFIRMASI</strong> agar melakukan Daftar Ulang pada tanggal 3 - 7 Juli 2023 dengan menyerahkan dokumen:</p>
+                <p>Bagi yang <strong>DITERIMA JALUR <?=$siswa['jurusan']?></strong> agar melakukan Daftar Ulang pada tanggal 12 - 14 Juli 2023 dengan menyerahkan dokumen:</p>
                 <ol>
                     <li>Surat Keterangan Lulus (SKL) Asli;</li>
                     <li>Tanda Bukti Pengajuan Pendaftaran (Lembar 1 dan Lembar 2)</li>
-                    <li>Print out Bukti Tanda Lulus Seleksi Jalur Afirmasi dari website PPDB SMAN 9 Tangerang;</li>
+                    <li>Print out Bukti Tanda Lulus Seleksi Jalur <?php echo ucwords(strtolower($siswa['jurusan'])); ?> dari website PPDB SMAN 9 Tangerang;</li>
                     <li>Fotocopy Kartu Keluarga;</li>
                     <li>Fotocopy Akte Kelahiran;</li>
-                    <li>Fotocopy KKS/KIP/PKH/KIS;</li>
+                    <?php
+                    if ($siswa['jurusan'] == "ZONASI") {
+                        echo '<li>ZONASI;</li>';
+                    } elseif ($siswa['jurusan'] == "PRESTASI AKADEMIK") {
+                        echo '<li>PRESTASI AKADEMIK;</li>';
+                    } elseif ($siswa['jurusan'] == "PRESTASI NON AKADEMIK") {
+                        echo '<li>PRESTASI NON AKADEMIK;</li>';
+                    } else {
+                        echo '<li>PERPINDAHAN TUGAS ORANG TUA;</li>';
+                    }
+                    
+                    ?>
                     <li>Pas photo ukuran 3 x 4 sebanyak 1 lembar.</li>
                     <li>Nomor 1 s.d 6 dimasukan ke dalam Map <strong>BIRU</strong> untuk <strong>LAKI-LAKI</strong>, Map <strong>MERAH</strong> untuk <strong>PEREMPUAN</strong>.</li>
                 </ol>
