@@ -87,7 +87,8 @@ require("config/functions.crud.php");
 
 
 				</div>
-
+				<?php if ($akhir <= $awal) { ?>
+				
 				<div class="animated bounceInRight bg0 wsize1 bor1 p-l-45 p-r-45 p-t-50 p-b-18 p-lr-15-sm">
 					<h3 class="l1-txt3 txt-center p-b-43">
 						Login Siswa
@@ -101,7 +102,7 @@ require("config/functions.crud.php");
 						</div>
 
 						<div class="wrap-input100 validate-input m-b-20" data-validate="Password is required">
-							<input class="input100 placeholder0 s1-txt1" type="text" name="password" placeholder="dd-mm-yyyy">
+							<input class="input100 placeholder0 s1-txt1" type="date" name="password" value="31/12/2008">
 							<span class="focus-input100"></span>
 						</div>
 
@@ -111,9 +112,11 @@ require("config/functions.crud.php");
 					</form>
 
 					<p class="s1-txt3 txt-center p-l-15 p-r-15 p-t-25">
-						Login menggunakan Kode Pendaftaran <br> Password Tanggal Lahir <strong>dd-mm-yyyy</strong>
+						Copyright 2021-<?=date('Y')?> &copy SMAN 9 Tangerang
 					</p>
 				</div>
+				<?php } else { ?>
+    			<?php } ?>
 			</div>
 		<?php } else { ?>
 			<?php $siswa = fetch($koneksi, 'siswa', ['id' => $_SESSION['id_siswaskl']]) ?>

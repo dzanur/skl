@@ -90,4 +90,8 @@
     'bold' => $fontDir . '/nunito-bold_c84ca7b5ac4161088d90f79ba68f57f4',
     '800' => $fontDir . '/nunito-800_b3297cfc29a3f1ea1eb37c8b28ea28ee',
   ),
+  'stix two text' => array(
+    'normal' => $fontDir . '/stix-two-text-normal_0c7af04adbc287a90171bad37a159af5',
+    'bold' => $fontDir . '/stix-two-text-bold_f0eb57d8030e7519fe6eedd0f4ed3abd',
+  ),
 ) ?>

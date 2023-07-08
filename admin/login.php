@@ -73,7 +73,8 @@
         </form>
 
         <p class="s1-txt3 txt-center p-l-15 p-r-15 p-t-25">
-          CopyRight @ 2021 SMAN 9 Tangerang
+          CopyRight @ 2021 - <?= date('Y') ?> <br>
+          SMAN 9 Tangerang
         </p>
       </div>
     </div>

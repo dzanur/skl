@@ -22,7 +22,7 @@ if (!file_exists($tempdir)) //Buat folder bername temp
 //simpan file kedalam temp
 //nilai konfigurasi Frame di bawah 4 tidak direkomendasikan
 
-QRcode::png($codeContents, $tempdir . $siswa['nis'] . '.png', QR_ECLEVEL_M, 4);
+QRcode::png($codeContents, $tempdir . $siswa['nisn'] . '.png', QR_ECLEVEL_M, 4);
 
 ?>
 <!DOCTYPE html>
@@ -35,6 +35,17 @@ QRcode::png($codeContents, $tempdir . $siswa['nis'] . '.png', QR_ECLEVEL_M, 4);
 
     <!-- General CSS Files -->
     <link rel="stylesheet" href="../../assets/back/vendors/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=STIX+Two+Text:wght@400;700&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            /* font-family: 'Barlow', sans-serif; */
+            /* font-family: 'Zilla Slab', serif; */
+            font-family: 'STIX Two Text', serif;
+        }
+    </style>
 
 
 </head>
@@ -118,27 +129,81 @@ QRcode::png($codeContents, $tempdir . $siswa['nis'] . '.png', QR_ECLEVEL_M, 4);
             <?php } ?>
             <div class="container-fluid">
                 <h4 class="text-center my-3">INFORMASI DAFTAR ULANG</h4>
-                <p>Bagi yang <strong>DITERIMA JALUR <?=$siswa['jurusan']?></strong> agar melakukan Daftar Ulang pada tanggal 12 - 14 Juli 2023 dengan menyerahkan dokumen:</p>
+                <p style="text-align: justify; ">Bagi yang <strong>DITERIMA JALUR <?=$siswa['jurusan']?></strong> agar melakukan Daftar Ulang pada tanggal 12 - 14 Juli 2023 dengan menyerahkan dokumen:</p>
                 <ol>
-                    <li>Surat Keterangan Lulus (SKL) Asli;</li>
-                    <li>Tanda Bukti Pengajuan Pendaftaran (Lembar 1 dan Lembar 2)</li>
-                    <li>Print out Bukti Tanda Lulus Seleksi Jalur <?php echo ucwords(strtolower($siswa['jurusan'])); ?> dari website PPDB SMAN 9 Tangerang;</li>
-                    <li>Fotocopy Kartu Keluarga;</li>
-                    <li>Fotocopy Akte Kelahiran;</li>
+                    <?php 
+                    $documents = array(
+                        "zonasi" => array(
+                            "Surat Keterangan Lulus (SKL) Asli;",
+                            "Tanda Bukti Pengajuan Pendaftaran (Lembar 1 dan Lembar 2)",
+                            "Print out Bukti Tanda Lulus Seleksi Jalur ".ucwords(strtolower($siswa['jurusan']))." dari website PPDB SMAN 9 Tangerang;",
+                            "Fotocopy Kartu Keluarga;",
+                            "Fotocopy Akte Kelahiran;",
+                            "Tangkapan layar titik ke titik dari lokasi tempat tinggal dan Satuan Pendidikan",
+                            "Pas photo ukuran 3 x 4 sebanyak 1 lembar.",
+                        ),
+                        "akademik" => array(
+                            "Surat Keterangan Lulus (SKL) Asli;",
+                            "Tanda Bukti Pengajuan Pendaftaran (Lembar 1 dan Lembar 2)",
+                            "Print out Bukti Tanda Lulus Seleksi Jalur ".ucwords(strtolower($siswa['jurusan']))." dari website PPDB SMAN 9 Tangerang;",
+                            "Fotocopy Kartu Keluarga;",
+                            "Fotocopy Akte Kelahiran;",
+                            "Foto Copy Rapor Semester 1-5",
+                            "Pas photo ukuran 3 x 4 sebanyak 1 lembar.",
+                        ),
+                        "nonakademik" => array(
+                            "Surat Keterangan Lulus (SKL) Asli;",
+                            "Tanda Bukti Pengajuan Pendaftaran (Lembar 1 dan Lembar 2)",
+                            "Print out Bukti Tanda Lulus Seleksi Jalur ".ucwords(strtolower($siswa['jurusan']))." dari website PPDB SMAN 9 Tangerang;",
+                            "Fotocopy Kartu Keluarga;",
+                            "Fotocopy Akte Kelahiran;",
+                            "Foto Copy Sertifikat Kejuaraan",
+                            "Pas photo ukuran 3 x 4 sebanyak 1 lembar.",
+                        ),
+                        "mutasi" => array(
+                            "Surat Keterangan Lulus (SKL) Asli;",
+                            "Tanda Bukti Pengajuan Pendaftaran (Lembar 1 dan Lembar 2)",
+                            "Print out Bukti Tanda Lulus Seleksi Jalur ".ucwords(strtolower($siswa['jurusan']))." dari website PPDB SMAN 9 Tangerang;",
+                            "Fotocopy Kartu Keluarga;",
+                            "Fotocopy Akte Kelahiran;",
+                            "Foto Copy Surat Penugasan Orang Tua",
+                            "Pas photo ukuran 3 x 4 sebanyak 1 lembar.",
+                        )
+                    );
+                    ?>
                     <?php
                     if ($siswa['jurusan'] == "ZONASI") {
-                        echo '<li>ZONASI;</li>';
+                        $i = 1;
+                        foreach ($documents['zonasi'] as $document) {
+                            // var_dump($document[0]);
+                            echo "<li style='text-align: justify;'>" . $document . "</li>";
+                            $i++;
+                        }
                     } elseif ($siswa['jurusan'] == "PRESTASI AKADEMIK") {
-                        echo '<li>PRESTASI AKADEMIK;</li>';
+                        $i = 1;
+                        foreach ($documents['akademik'] as $document) {
+                            // var_dump($document[0]);
+                            echo "<li style='text-align: justify;'>" . $document . "</li>";
+                            $i++;
+                        }
                     } elseif ($siswa['jurusan'] == "PRESTASI NON AKADEMIK") {
-                        echo '<li>PRESTASI NON AKADEMIK;</li>';
+                        $i = 1;
+                        foreach ($documents['nonakademik'] as $document) {
+                            // var_dump($document[0]);
+                            echo "<li style='text-align: justify;'>" . $document . "</li>";
+                            $i++;
+                        }
                     } else {
-                        echo '<li>PERPINDAHAN TUGAS ORANG TUA;</li>';
+                        $i = 1;
+                        foreach ($documents['mutasi'] as $document) {
+                            // var_dump($document[0]);
+                            echo "<li style='text-align: justify;'>" . $document . "</li>";
+                            $i++;
+                        }
                     }
                     
                     ?>
-                    <li>Pas photo ukuran 3 x 4 sebanyak 1 lembar.</li>
-                    <li>Nomor 1 s.d 6 dimasukan ke dalam Map <strong>BIRU</strong> untuk <strong>LAKI-LAKI</strong>, Map <strong>MERAH</strong> untuk <strong>PEREMPUAN</strong>.</li>
+                    <li>Nomor 1 s.d <?php echo $i++ - 1; unset($i); ?> dimasukan ke dalam Map <strong>BIRU</strong> untuk <strong>LAKI-LAKI</strong>, Map <strong>MERAH</strong> untuk <strong>PEREMPUAN</strong>. </li>
                 </ol>
                 <p>
                     Terima kasih.
@@ -146,7 +211,7 @@ QRcode::png($codeContents, $tempdir . $siswa['nis'] . '.png', QR_ECLEVEL_M, 4);
                 <table width="100%" class="border-0 mt-5">
                     <tr>
                         <td style="text-align: center; border-style: solid;" width="130">
-                            <strong>Isian Online</strong><hr>
+                            <strong>Form Pendataan <br><span class="text-danger">*</span>Wajib di isi</strong><hr>
                             <img src="../../temp/isianonline.jpg" width="150" alt="Isian Online 2023"><br/>
                             <span class="text-center">SCAN Me</span>
                         </td>
@@ -173,7 +238,8 @@ use Dompdf\Dompdf;
 
 $dompdf = new Dompdf();
 $dompdf->loadHtml($html);
-$dompdf->setPaper('A4', 'portrait');
+$customPaper = array(0,0,610,930);
+$dompdf->setPaper($customPaper);
 $dompdf->render();
 $dompdf->stream($siswa['nama'] . ".pdf", array("Attachment" => false));
 exit(0);

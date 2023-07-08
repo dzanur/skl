@@ -80,7 +80,7 @@ if (isset($_SESSION['id_user'])) {
                 </div>
                 <!-- END PAGE CONTENT-->
                 <footer class="page-footer">
-                    <div class="font-13">CopyRight <?= date('Y') ?> © <b>SMAN 9 Tangerang</b></div>
+                    <div class="font-13">CopyRight 2021 - <?= date('Y') ?> © <b>SMAN 9 Tangerang</b></div>
                     <a class="px-4" href="http://sman9tangerang.sch.id/" target="_blank">SMANLANTA</a>
                     <div class="to-top"><i class="fa fa-angle-double-up"></i></div>
                 </footer>
